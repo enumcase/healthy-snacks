@@ -1,2 +1,2 @@
 # healthy-snacks
-Healthy/unhealthy snacks classifier.
+🍔 Healthy/unhealthy snacks classifier.
