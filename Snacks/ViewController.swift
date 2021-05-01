@@ -44,7 +44,7 @@ class ViewController: UIViewController {
             let healthySnacks = HealthySnacks()
             let visionModel = try VNCoreMLModel(for: healthySnacks.model)
             let request = VNCoreMLRequest(model: visionModel) { [weak self] request, error in
-                print("Request is finished!", request.results)
+                self?.processObservation(for: request, error: error)
             }
             
             request.imageCropAndScaleOption = .centerCrop
@@ -130,6 +130,24 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    func processObservation(for request: VNRequest, error: Error?) {
+        DispatchQueue.main.async {
+            if let results = request.results as? [VNClassificationObservation] {
+                if results.isEmpty {
+                    self.resultsLabel.text = "Nothing found"
+                } else {
+                    self.resultsLabel.text = String(format: "%@ %.1f%%", results[0].identifier, results[0].confidence * 100)
+                }
+            } else if let error = error {
+                self.resultsLabel.text = "Error: \(error.localizedDescription)"
+            } else {
+                self.resultsLabel.text = "???"
+            }
+            
+            self.showResultsView()
+        }
+    }
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -137,7 +155,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         picker.dismiss(animated: true)
         
         let image = info[.originalImage] as! UIImage
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.image = image
         
         classify(image: image)
