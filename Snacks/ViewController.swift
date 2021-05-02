@@ -136,6 +136,8 @@ class ViewController: UIViewController {
             if let results = request.results as? [VNClassificationObservation] {
                 if results.isEmpty {
                     self.resultsLabel.text = "Nothing found"
+                } else if results[0].confidence < 0.8 {
+                    self.resultsLabel.text = "Not sure"
                 } else {
                     self.resultsLabel.text = String(format: "%@ %.1f%%", results[0].identifier, results[0].confidence * 100)
                 }
