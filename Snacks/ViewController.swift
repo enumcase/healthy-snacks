@@ -157,7 +157,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         picker.dismiss(animated: true)
         
         let image = info[.originalImage] as! UIImage
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         imageView.image = image
         
         classify(image: image)
