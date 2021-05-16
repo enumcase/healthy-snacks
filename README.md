@@ -1,7 +1,7 @@
 # Vision and CoreML iOS app.
 🍔 Healthy/unhealthy snacks classifier.
 
-It's a binary classifier app that lets users to take or choose photos from library and uses pretrained CoreML model to detect the healthiness of the food.
+It's a binary classifier iOS app that lets users to take or choose photos from library and uses pretrained CoreML model to detect the healthiness of the food.
 
 Some of the screens are:
 
